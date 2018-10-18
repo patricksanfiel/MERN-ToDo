@@ -46,12 +46,6 @@ class NavBar extends Component{
                     </div>
                 </nav>
                 {renderResponsive()}
-                {/* <div className="responsive container">
-                    <ul className="right">
-                        <li><Link to="/todo">Todo List</Link></li>
-                        {backButton}
-                    </ul>
-                </div> */}
             </div>
         )
     }

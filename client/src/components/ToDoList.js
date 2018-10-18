@@ -18,7 +18,6 @@ class ToDoList extends Component{
     fetchToDos = async () => {
         let todos = await axios.get("/todo/api")
         todos = todos.data
-        // console.log(todos)
         this.setState({todos: todos})
     }
 
@@ -69,7 +68,6 @@ class ToDoList extends Component{
     }
 
     render(){
-        console.log(this.props.history.location)
         return(
                 <div className="container">
                     {this.deletedNotification()}

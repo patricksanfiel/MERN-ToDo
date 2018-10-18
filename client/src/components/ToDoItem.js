@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import ToDoForm from './ToDoForm';
 
 class ToDoItem extends Component{
     state = {
@@ -26,7 +27,7 @@ class ToDoItem extends Component{
         if(!this.state.displayEditForm){
             buttons = (
                 <div className="row card-action">
-                    <button onClick={()=>this.deleteItem()} className="btn red left todo-item-button col-s-3 col-3" id="todo-item-left-button"><i className="material-icons left">delete</i>Delete</button>
+                    <button onClick={()=>this.deleteItem()} className="btn red lighten-1 left todo-item-button col-s-3 col-3" id="todo-item-left-button"><i className="material-icons left">delete</i>Delete</button>
                     <button onClick={()=>this.toggleEditForm()} className="btn darken yellow darken-2 right todo-item-button col-s-3 col-3"><i className="material-icons left">edit</i>Edit</button>
                 </div>
             )
@@ -71,49 +72,18 @@ class ToDoItem extends Component{
 
 
     displayEditForm(){
-        const todo = this.state.item
         if(this.state.displayEditForm){
             return(
-                <div className="container">
-                    <form onSubmit={(event)=>this.editItem(event)}>
-                        <div className="row">
-                            <label>ToDo Title</label>
-                            <input type="text" ref="todoTitle" defaultValue={todo.todoTitle}/>
-                            {this.state.todoEmptyTitle ? <span className="empty-title-prompt">Title cannot be empty</span> : null}
-                        </div>
-                        <div className="row">
-                            <label>ToDo Body</label>
-                            <input type="text" ref="todoBody" defaultValue={todo.todoBody}/>
-                            {this.state.todoEmptyBody ? <span className="empty-body-prompt">Body cannot be empty</span>: null}
-                        </div>
-                        <button onClick={()=>this.toggleEditForm()} className="btn red left"><i className="material-icons left">cancel</i>Cancel</button>
-                        <button type="submit" value="submit" className="btn right">Update<i className="material-icons right">check</i></button>
-                    </form>
-                </div>
+                <ToDoForm  
+                    todo={this.state.item} 
+                    cancelClicked={(event)=>this.toggleEditForm(event)}
+                    params={this.props.match.params}
+                    formType="update"    
+                />
             )
         }
     }
 
-    editItem(event){
-        const todoTitle = this.refs.todoTitle.value;
-        const todoBody = this.refs.todoBody.value;
-        axios.put(`/todo/api/${this.props.match.params.id}`, {
-            todoTitle: todoTitle,
-            todoBody: todoBody,
-            updatedAt: Date.now()
-        })
-        .then(res => console.log(res))
-        .catch(error => console.log(`Error: ${error.message}`))
-        if(!todoTitle || !todoBody){
-            event.preventDefault()
-            if(!todoTitle){
-                this.setState({todoEmptyTitle: true})
-            }
-            if(!todoBody){
-                this.setState({todoEmptyBody: true})
-            }
-        }
-    }
 
     deleteItem(){
         axios.delete(`/todo/api/${this.props.match.params.id}`)
@@ -129,7 +99,9 @@ class ToDoItem extends Component{
         return(
             <div>
                 {this.renderItem()}
-                {this.displayEditForm()}
+                <div className="container">
+                    {this.displayEditForm()}
+                </div>
             </div>
         )
     }
