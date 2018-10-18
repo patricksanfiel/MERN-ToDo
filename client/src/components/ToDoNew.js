@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 class ToDoNew extends Component{
+
 
     submitHandler(event) {
         const todoTitle = this.refs.todoTitle.value;
@@ -13,17 +15,34 @@ class ToDoNew extends Component{
             })
         .then(res => console.log(res))
         .catch(error => console.log(`Error: ${error.message}`))
+        if(todoTitle && todoBody){
+            this.props.history.replace("/todo")
+        } else {
+            event.preventDefault()
+        }
     }
 
     render(){
         return(
-            <form onSubmit={(event)=>this.submitHandler(event)}>
-                <label>ToDo Title</label>
-                <input type="text" ref="todoTitle"/>
-                <label>ToDo Body</label>
-                <input type="text" ref="todoBody" />
-                <button type="submit" value="submit">Save ToDo</button> 
-            </form>
+            <div className="container">
+                <div className="row">
+                    <h2 className="col-12 col-s-12" id="new-todo-header">Add a New To-Do Item</h2>
+                </div>
+                <form onSubmit={(event)=>this.submitHandler(event)}>
+                    <div className="input-field">
+                        <label>ToDo Title</label>
+                        <input type="text" ref="todoTitle"/>
+                    </div>
+                    <div className="input-field">
+                        <label>ToDo Body</label>
+                        <input type="text" ref="todoBody" />
+                    </div>
+                    <div className="row">
+                        <Link to="/todo"><button className="btn red left"><i className="material-icons left">cancel</i>Cancel</button></Link>
+                        <button type="submit" value="submit" className="btn right">Save<i className="material-icons right">check</i></button>
+                    </div> 
+                </form>
+            </div>
         )
     }
 }

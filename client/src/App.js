@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import ToDoNew from './components/ToDoNew';
 import ToDoItem from './components/ToDoItem';
 import ToDoList from './components/ToDoList';
+import NavBar from './components/NavBar';
+import './assets/CSS/todo.css';
 
 
 class App extends Component {
@@ -11,11 +13,13 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <h1>App</h1>
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/todo/new" component={ToDoNew} />
-          <Route exact path="/todo" component={ToDoList}/>
-          <Route path="/todo/:id" component={ToDoItem} />
+          <NavBar />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/todo/new" component={ToDoNew} />
+            <Route exact path="/todo" component={ToDoList}/>
+            <Route path="/todo/:id" component={ToDoItem} />
+          </Switch>
         </div>
       </Router>
     );

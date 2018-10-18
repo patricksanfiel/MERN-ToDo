@@ -40,7 +40,8 @@ app.post("/todo/new/api", async (req, res) => {
     const todo = await new ToDo({
         todoTitle: req.body.todoTitle,
         todoBody: req.body.todoBody,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        updatedAt: null
     })
     try{
         await todo.save()
@@ -85,8 +86,10 @@ app.put("/todo/api/:_id", async (req, res) => {
     }
     const todo = await ToDo.findByIdAndUpdate(req.params._id, {
        todoTitle: req.body.todoTitle,
-       todoBody: req.body.todoBody 
+       todoBody: req.body.todoBody,
+       updatedAt: Date.now() 
     }, {new:true})
+    console.log(todo)
     if(!todo){
         return res.status(404).send({message: `No To-do item with the ID:${req.params._id} found`})
     }

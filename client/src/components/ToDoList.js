@@ -20,11 +20,24 @@ class ToDoList extends Component{
 
     renderToDos(){
         const todos = this.state.todos
-        return (todos.map((todo) => {
+        return (
+            todos
+            .sort(
+                (a,b)=>{
+                    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                }
+            )
+            .map((todo) => {
                 return(
                     <Link key={todo._id} id={todo._id} to={`/todo/${todo._id}`}>
-                        <h1>{todo.todoTitle}</h1>
-                        <p>{todo.todoBody}</p>
+                        <div className="row">
+                            <div className="card teal lighten-3">
+                                <div className="card-content white-text">
+                                    <span className="card-title">{todo.todoTitle}</span>
+                                    <p>{todo.todoBody}</p>
+                                </div>
+                            </div>
+                        </div>
                     </Link>
                 )
             })
@@ -33,9 +46,14 @@ class ToDoList extends Component{
 
     render(){
         return(
-                <div>
-                    <h1>ToDo List</h1>
+                <div className="container">
+                    <div className="row">
+                        <h1>To-Do List</h1>
+                    </div>
                     {this.renderToDos()}
+                    <div className="row fixed-action-btn">
+                        <Link to="/todo/new"><button className="btn-floating btn-large waves-effect waves-light red left"><i className="material-icons">add</i></button></Link>
+                    </div>
                 </div>
             )
     }
