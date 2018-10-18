@@ -7,7 +7,7 @@
 [class*="col-"] {
     float: left;
     padding: 15px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 .row::after {
     content: "";
@@ -40,6 +40,45 @@
     cursor: pointer;
 }
 
+#todo-item-header-row{
+    margin-bottom: 0;
+}
+.todo-item-button{
+    line-height: 50%;
+    padding: 2em;
+}
+#todo-item-left-button{
+    margin-bottom: 1em;
+}
+.card-head{
+    border-bottom: 1px solid white;
+}
+#todo-item-header-text{
+    font-size: 2.5em;
+}
+#todo-item-date-span{
+    font-size: 0.8em;
+}
+#todo-item-date-text{
+    font-weight: bold;
+}
+#todo-list-header{
+    text-align: center;
+}
+.empty-title-prompt, .empty-body-prompt{
+    font-style: italic;
+    color: #e57373;
+}
+.created-notification-text{
+    text-align: center;
+    font-weight: bold;
+    color: #009688;
+}
+.deleted-notification-text{
+    text-align: center;
+    color: #e57373;
+    font-weight: bold;
+}
 @media only screen and (min-width: 600px) {
     /* For tablets: */
     .col-s-1 {width: 8.33%;}

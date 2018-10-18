@@ -3,7 +3,10 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 class ToDoNew extends Component{
-
+    state = {
+        todoEmptyTitle: false,
+        todoEmptyBody: false
+    }
 
     submitHandler(event) {
         const todoTitle = this.refs.todoTitle.value;
@@ -16,9 +19,20 @@ class ToDoNew extends Component{
         .then(res => console.log(res))
         .catch(error => console.log(`Error: ${error.message}`))
         if(todoTitle && todoBody){
-            this.props.history.replace("/todo")
+            this.props.history.replace(
+                    {
+                        pathname:"/todo", 
+                        search:"created"
+                    }
+                )
         } else {
             event.preventDefault()
+            if(!todoTitle){
+                this.setState({todoEmptyTitle: true})
+            }
+            if(!todoBody){
+                this.setState({todoEmptyBody: true})
+            }
         }
     }
 
@@ -32,10 +46,12 @@ class ToDoNew extends Component{
                     <div className="input-field">
                         <label>ToDo Title</label>
                         <input type="text" ref="todoTitle"/>
+                        {this.state.todoEmptyTitle ? <span className="empty-title-prompt">Title cannot be empty</span> : null}
                     </div>
                     <div className="input-field">
                         <label>ToDo Body</label>
                         <input type="text" ref="todoBody" />
+                        {this.state.todoEmptyBody ? <span className="empty-body-prompt">Body cannot be empty</span>: null}
                     </div>
                     <div className="row">
                         <Link to="/todo"><button className="btn red left"><i className="material-icons left">cancel</i>Cancel</button></Link>

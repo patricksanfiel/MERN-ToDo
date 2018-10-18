@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 
 class ToDoList extends Component{
     state={
-        todos: []
+        todos: [],
+        deleted: false
     }
 
     componentDidMount(){
         this.fetchToDos()
+    }
+    componentDidUpdate(){
+        this.renderToDos()
     }
 
     fetchToDos = async () => {
@@ -44,11 +48,34 @@ class ToDoList extends Component{
         )
     }
 
+    createdNotification(){
+        if(this.props.history.location.search==="?created"){
+            return(
+                <div className="created-notification-div row">
+                    <span className="created-notification-text col-s-12 col-12">To-do list item successfully created</span>
+                </div>
+            )
+        }
+    }
+
+    deletedNotification(){
+        if(this.props.history.location.search==="?deleted"){
+            return(
+                <div className="deleted-notification-div row">
+                    <span className="deleted-notification-text col-s-12 col-12">To-do list item successfully deleted</span>
+                </div>
+            )
+        }
+    }
+
     render(){
+        console.log(this.props.history.location)
         return(
                 <div className="container">
+                    {this.deletedNotification()}
+                    {this.createdNotification()}
                     <div className="row">
-                        <h1>To-Do List</h1>
+                        <h1 className="col-s-12 col-12" id="todo-list-header">To-Do List</h1>
                     </div>
                     {this.renderToDos()}
                     <div className="row fixed-action-btn">
